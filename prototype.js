@@ -11,7 +11,7 @@ function isToday(date) {
     const today = new Date();
     return date.getYear() === today.getYear() &&
         date.getMonth() === today.getMonth() &&
-        date.getDay() === today.getDay();
+        date.getDate() === today.getDate();
 }
 
 const USER_NAME = 'philbobaggins'; // TODO: Get from command line arguments
