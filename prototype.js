@@ -1,6 +1,8 @@
+#!/usr/bin/env node
+
 'use strict';
 
-const request = require('request');
+const request = require('request'); // https://github.com/request/request
 const _ = require('underscore'); // http://underscorejs.org/
 
 function getDates(obj) {
