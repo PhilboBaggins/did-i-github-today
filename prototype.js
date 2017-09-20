@@ -1,7 +1,7 @@
 'use strict';
 
-var request = require('request');
-var _ = require('underscore'); // http://underscorejs.org/
+const request = require('request');
+const _ = require('underscore'); // http://underscorejs.org/
 
 function getDates(obj) {
     return new Date(obj.created_at);
