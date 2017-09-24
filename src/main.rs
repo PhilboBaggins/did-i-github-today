@@ -49,7 +49,7 @@ fn main() {
                         && dt_local.day() == today.day();
             if is_today && verbose > 0 {
                 let event_type = x["type"].as_str().unwrap();
-                println!("{} at {}", event_type, dt_local.format("%H:%M:%S").to_string());
+                eprintln!("{} at {}", event_type, dt_local.format("%H:%M:%S").to_string());
             }
             is_today
         });
