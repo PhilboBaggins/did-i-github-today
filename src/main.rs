@@ -27,6 +27,9 @@ fn main() {
     let verbose = matches.occurrences_of("verbose");
     let url = format!("https://api.github.com/users/{}/events", username);
 
+    if verbose > 1 {
+        eprintln!("Fetching {}", url);
+    }
     // TODO: Set user-agent header
     let mut resp = reqwest::get(&url).unwrap(); // TODO: Don't unwrap here!!
     assert!(resp.status().is_success());  // TODO: Don't assert here
@@ -34,6 +37,9 @@ fn main() {
     let mut content = String::new();
     if let Err(error) = resp.read_to_string(&mut content) {
         panic!("{:?}", error); // TODO: Handle this better
+    }
+    if verbose > 2 { // Super verbose!
+        eprintln!("{}", content);
     }
 
     let today = Local::now();
