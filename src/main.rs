@@ -7,6 +7,18 @@ use clap::{App, Arg};
 use std::io::Read;
 use chrono::prelude::*;
 
+fn describe_event(event: &json::JsonValue) -> String {
+    let event_type = event["type"].as_str().unwrap();
+    match event_type {
+        "CreateEvent" => {
+            let payload_ref_type = event["payload"]["ref_type"].as_str().unwrap();
+            format!("{} ({})", event_type, payload_ref_type)
+        },
+        // TODO: Consider other event types: https://developer.github.com/v3/activity/events/types/
+        _ => format!("{}", event_type)
+    }
+}
+
 fn main() {
     let matches = App::new("bakt")
         .version("1.0")
@@ -54,8 +66,7 @@ fn main() {
                         && dt_local.month() == today.month()
                         && dt_local.day() == today.day();
             if is_today && verbose > 0 {
-                let event_type = x["type"].as_str().unwrap();
-                eprintln!("{} at {}", event_type, dt_local.format("%H:%M:%S").to_string());
+                eprintln!("{} at {}", describe_event(x), dt_local.format("%H:%M:%S").to_string());
             }
             is_today
         });
