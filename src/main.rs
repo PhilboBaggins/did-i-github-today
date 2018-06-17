@@ -8,14 +8,14 @@ use std::io::Read;
 use chrono::prelude::*;
 
 fn describe_event(event: &json::JsonValue) -> String {
-    let event_type = event["type"].as_str().unwrap();
-    match event_type {
-        "CreateEvent" => {
-            let payload_ref_type = event["payload"]["ref_type"].as_str().unwrap();
-            format!("{} ({})", event_type, payload_ref_type)
+    match event["type"].as_str() {
+        Some("CreateEvent") => {
+            let payload_ref_type = event["payload"]["ref_type"].as_str().unwrap_or("Unknown");
+            format!("CreateEvent ({})", payload_ref_type)
         },
         // TODO: Consider other event types: https://developer.github.com/v3/activity/events/types/
-        _ => format!("{}", event_type)
+        Some(event_type) => format!("{}", event_type),
+        None => "Unknown event".to_string(),
     }
 }
 
