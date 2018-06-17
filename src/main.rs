@@ -60,7 +60,7 @@ fn main() {
 
         let todays_events = data.iter().filter(|x| {
             let dt_str = x["created_at"].as_str().unwrap();
-            let dt = DateTime::parse_from_rfc3339(dt_str).unwrap(); // TODO: Is the the right date time standard
+            let dt = DateTime::parse_from_rfc3339(dt_str).unwrap(); // TODO: Is this the right date/time standard?
             let dt_local = dt.with_timezone(&Local);
             let is_today = dt_local.year() == today.year()
                         && dt_local.month() == today.month()
