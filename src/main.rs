@@ -82,8 +82,7 @@ fn main() {
         // in cases where verbose < 1.
         if todays_events.count() > 0 {
             println!("Yes");
-        }
-        else {
+        } else {
             println!("No");
         }
     }
