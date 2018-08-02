@@ -73,7 +73,7 @@ fn main() {
     if verbose > 1 {
         eprintln!("Fetching {}", url);
     }
-    // TODO: Set user-agent header
+    // TODO: Set user-agent header - https://developer.github.com/v3/#user-agent-required
     let mut resp = reqwest::get(&url).unwrap(); // TODO: Don't unwrap here!!
     assert!(resp.status().is_success());  // TODO: Don't assert here
 
