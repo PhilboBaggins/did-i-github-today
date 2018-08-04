@@ -85,8 +85,9 @@ fn main() {
         eprintln!("{}", content);
     }
 
-    let parsed = json::parse(&content).unwrap(); // TODO: Don't unwrap here!!
-    if let json::JsonValue::Array(data) = parsed {
+    if let Ok(json::JsonValue::Array(data)) = json::parse(&content) {
         look_for_events(data, verbose);
+    } else {
+        eprintln!("Unable to understand response from Github API");
     }
 }
