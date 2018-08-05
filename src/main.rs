@@ -89,5 +89,6 @@ fn main() {
         look_for_events(data, verbose);
     } else {
         eprintln!("Unable to understand response from Github API");
+        ::std::process::exit(1);
     }
 }
