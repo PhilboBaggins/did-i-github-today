@@ -78,7 +78,10 @@ fn main() {
         eprintln!("{}", error.to_string());
         ::std::process::exit(1);
     });
-    assert!(resp.status().is_success()); // TODO: Don't assert here
+    if resp.status().is_success() == false {
+        eprintln!("Failed to access Github API, HTTP status code was {}", resp.status());
+        ::std::process::exit(1);
+    }
 
     let mut content = String::new();
     if let Err(error) = resp.read_to_string(&mut content) {
