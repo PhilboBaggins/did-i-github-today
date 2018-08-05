@@ -29,7 +29,7 @@ fn look_for_events(data: Vec<json::JsonValue>, verbose: u64) {
                     && dt_local.month() == today.month()
                     && dt_local.day() == today.day();
         if is_today && verbose > 0 {
-            eprintln!("{} at {}", describe_event(x), dt_local.format("%H:%M:%S").to_string());
+            println!("{} at {}", describe_event(x), dt_local.format("%H:%M:%S").to_string());
         }
         is_today
     });
@@ -71,7 +71,7 @@ fn main() {
     let url = format!("https://api.github.com/users/{}/events", username);
 
     if verbose > 1 {
-        eprintln!("Fetching {}", url);
+        println!("Fetching {}", url);
     }
     // TODO: Set user-agent header - https://developer.github.com/v3/#user-agent-required
     let mut resp = reqwest::get(&url).unwrap_or_else(|error| {
@@ -85,7 +85,7 @@ fn main() {
         panic!("{:?}", error); // TODO: Handle this better
     }
     if verbose > 2 { // Super verbose!
-        eprintln!("{}", content);
+        println!("{}", content);
     }
 
     if let Ok(json::JsonValue::Array(data)) = json::parse(&content) {
