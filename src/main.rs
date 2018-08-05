@@ -74,8 +74,11 @@ fn main() {
         eprintln!("Fetching {}", url);
     }
     // TODO: Set user-agent header - https://developer.github.com/v3/#user-agent-required
-    let mut resp = reqwest::get(&url).unwrap(); // TODO: Don't unwrap here!!
-    assert!(resp.status().is_success());  // TODO: Don't assert here
+    let mut resp = reqwest::get(&url).unwrap_or_else(|error| {
+        eprintln!("{}", error.to_string());
+        ::std::process::exit(1);
+    });
+    assert!(resp.status().is_success()); // TODO: Don't assert here
 
     let mut content = String::new();
     if let Err(error) = resp.read_to_string(&mut content) {
