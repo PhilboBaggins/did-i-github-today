@@ -85,7 +85,8 @@ fn main() {
 
     let mut content = String::new();
     if let Err(error) = resp.read_to_string(&mut content) {
-        panic!("{:?}", error); // TODO: Handle this better
+        eprintln!("{}", error.to_string());
+        ::std::process::exit(1);
     }
     if verbose > 2 { // Super verbose!
         println!("{}", content);
