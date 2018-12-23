@@ -50,34 +50,47 @@ fn look_for_events(data: Vec<json::JsonValue>, verbose: u64) {
     }
 }
 
-fn get_and_parse_json(url: &str, verbose: u64) -> Vec<json::JsonValue> {
+#[derive(Debug)]
+enum MyError {
+    Io(std::io::Error),
+    ReqwestError(reqwest::Error),
+    Other(String),
+}
+
+impl From<std::io::Error> for MyError {
+    fn from(err: std::io::Error) -> MyError {
+        MyError::Io(err)
+    }
+}
+
+impl From<reqwest::Error> for MyError {
+    fn from(err: reqwest::Error) -> MyError {
+        MyError::ReqwestError(err)
+    }
+}
+
+fn get_and_parse_json(url: &str, verbose: u64) -> Result<Vec<json::JsonValue>, MyError> {
     if verbose > 1 {
         println!("Fetching {}", url);
     }
+
     // TODO: Set user-agent header - https://developer.github.com/v3/#user-agent-required
-    let mut resp = reqwest::get(url).unwrap_or_else(|error| {
-        eprintln!("{}", error.to_string());
-        ::std::process::exit(1);
-    });
+    let mut resp = reqwest::get(url)?;
     if resp.status().is_success() == false {
-        eprintln!("Failed to access Github API, HTTP status code was {}", resp.status());
-        ::std::process::exit(1);
+        return Err(MyError::Other(format!("Failed to access Github API, HTTP status code was {}", resp.status())));
     }
 
     let mut content = String::new();
-    if let Err(error) = resp.read_to_string(&mut content) {
-        eprintln!("{}", error.to_string());
-        ::std::process::exit(1);
-    }
+    resp.read_to_string(&mut content)?;
+
     if verbose > 2 { // Super verbose!
         println!("{}", content);
     }
 
     if let Ok(json::JsonValue::Array(data)) = json::parse(&content) {
-        data
+        Ok(data)
     } else {
-        eprintln!("Unable to understand response from Github API");
-        ::std::process::exit(1);
+        Err(MyError::Other("Unable to understand response from Github API".to_string()))
     }
 }
 
@@ -101,6 +114,11 @@ fn main() {
     let verbose = matches.occurrences_of("verbose");
     let url = format!("https://api.github.com/users/{}/events", username);
 
-    let data = get_and_parse_json(&url, verbose);
-    look_for_events(data, verbose);
+    match get_and_parse_json(&url, verbose) {
+        Ok(data) => look_for_events(data, verbose),
+
+        Err(MyError::Io(err))           => { eprintln!("IO {}", err); ::std::process::exit(1); },
+        Err(MyError::ReqwestError(err)) => { eprintln!("RQ {}", err); ::std::process::exit(1); },
+        Err(MyError::Other(err))        => { eprintln!("OO {}", err); ::std::process::exit(1); },
+    }
 }
