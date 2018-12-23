@@ -117,8 +117,8 @@ fn main() {
     match get_and_parse_json(&url, verbose) {
         Ok(data) => look_for_events(data, verbose),
 
-        Err(MyError::Io(err))           => { eprintln!("IO {}", err); ::std::process::exit(1); },
-        Err(MyError::ReqwestError(err)) => { eprintln!("RQ {}", err); ::std::process::exit(1); },
-        Err(MyError::Other(err))        => { eprintln!("OO {}", err); ::std::process::exit(1); },
+        Err(MyError::Io(err)) => { eprintln!("IO error: {}", err); ::std::process::exit(1); },
+        Err(MyError::ReqwestError(err)) => { eprintln!("HTTP request error: {}", err); ::std::process::exit(1); },
+        Err(MyError::Other(err)) => { eprintln!("{}", err); ::std::process::exit(1); },
     }
 }
