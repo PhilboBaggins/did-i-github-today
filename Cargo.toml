@@ -9,5 +9,5 @@ repository = "https://github.com/PhilboBaggins/did-i-github-today"
 [dependencies]
 clap = "2.32.0"
 json = "0.11.13"
-reqwest = "0.8.7"
-chrono = "0.4.5"
+reqwest = "0.9.5"
+chrono = "0.4.6"
