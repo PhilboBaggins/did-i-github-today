@@ -50,6 +50,37 @@ fn look_for_events(data: Vec<json::JsonValue>, verbose: u64) {
     }
 }
 
+fn get_and_parse_json(url: &str, verbose: u64) -> Vec<json::JsonValue> {
+    if verbose > 1 {
+        println!("Fetching {}", url);
+    }
+    // TODO: Set user-agent header - https://developer.github.com/v3/#user-agent-required
+    let mut resp = reqwest::get(url).unwrap_or_else(|error| {
+        eprintln!("{}", error.to_string());
+        ::std::process::exit(1);
+    });
+    if resp.status().is_success() == false {
+        eprintln!("Failed to access Github API, HTTP status code was {}", resp.status());
+        ::std::process::exit(1);
+    }
+
+    let mut content = String::new();
+    if let Err(error) = resp.read_to_string(&mut content) {
+        eprintln!("{}", error.to_string());
+        ::std::process::exit(1);
+    }
+    if verbose > 2 { // Super verbose!
+        println!("{}", content);
+    }
+
+    if let Ok(json::JsonValue::Array(data)) = json::parse(&content) {
+        data
+    } else {
+        eprintln!("Unable to understand response from Github API");
+        ::std::process::exit(1);
+    }
+}
+
 fn main() {
     let matches = App::new("bakt")
         .version("1.0")
@@ -70,32 +101,6 @@ fn main() {
     let verbose = matches.occurrences_of("verbose");
     let url = format!("https://api.github.com/users/{}/events", username);
 
-    if verbose > 1 {
-        println!("Fetching {}", url);
-    }
-    // TODO: Set user-agent header - https://developer.github.com/v3/#user-agent-required
-    let mut resp = reqwest::get(&url).unwrap_or_else(|error| {
-        eprintln!("{}", error.to_string());
-        ::std::process::exit(1);
-    });
-    if resp.status().is_success() == false {
-        eprintln!("Failed to access Github API, HTTP status code was {}", resp.status());
-        ::std::process::exit(1);
-    }
-
-    let mut content = String::new();
-    if let Err(error) = resp.read_to_string(&mut content) {
-        eprintln!("{}", error.to_string());
-        ::std::process::exit(1);
-    }
-    if verbose > 2 { // Super verbose!
-        println!("{}", content);
-    }
-
-    if let Ok(json::JsonValue::Array(data)) = json::parse(&content) {
-        look_for_events(data, verbose);
-    } else {
-        eprintln!("Unable to understand response from Github API");
-        ::std::process::exit(1);
-    }
+    let data = get_and_parse_json(&url, verbose);
+    look_for_events(data, verbose);
 }
