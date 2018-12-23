@@ -34,7 +34,7 @@ fn look_for_events(data: Vec<json::JsonValue>, verbose: u64) {
         is_today
     });
 
-    // In addition to it's obvious purpuse, I'm using the count method call
+    // In addition to it's obvious purpose, I'm using the count method call
     // below to cause side-effects in the filter above (print out today's
     // events when verbose > 0) ... that doesn't seem so nice but it does
     // save me from having to parse the datetime and convert it to local
