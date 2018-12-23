@@ -94,6 +94,13 @@ fn get_and_parse_json(url: &str, verbose: u64) -> Result<Vec<json::JsonValue>, M
     }
 }
 
+macro_rules! die {
+    ($($tt:tt)*) => {{
+        eprintln!($($tt)*);
+        ::std::process::exit(1)
+    }}
+}
+
 fn main() {
     let matches = App::new("Did I Github today?")
         .version("0.1.0")
@@ -117,8 +124,8 @@ fn main() {
     match get_and_parse_json(&url, verbose) {
         Ok(data) => look_for_events(data, verbose),
 
-        Err(MyError::Io(err)) => { eprintln!("IO error: {}", err); ::std::process::exit(1); },
-        Err(MyError::ReqwestError(err)) => { eprintln!("HTTP request error: {}", err); ::std::process::exit(1); },
-        Err(MyError::Other(err)) => { eprintln!("{}", err); ::std::process::exit(1); },
+        Err(MyError::Io(err)) => die!("IO error: {}", err),
+        Err(MyError::ReqwestError(err)) => die!("HTTP request error: {}", err),
+        Err(MyError::Other(err)) => die!("{}", err),
     }
 }
