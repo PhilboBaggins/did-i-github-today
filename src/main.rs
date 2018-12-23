@@ -95,9 +95,9 @@ fn get_and_parse_json(url: &str, verbose: u64) -> Result<Vec<json::JsonValue>, M
 }
 
 fn main() {
-    let matches = App::new("bakt")
-        .version("1.0")
-        .about("An app to tell you if you've done anything on Github today")
+    let matches = App::new("Did I Github today?")
+        .version("0.1.0")
+        .about("An command line application to tell you if you've done anything on Github today")
         .author("Phil B.")
         .arg(Arg::with_name("username")
             .help("Your Github username")
