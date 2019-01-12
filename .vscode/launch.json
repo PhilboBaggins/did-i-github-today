@@ -18,7 +18,10 @@
                     "kind": "bin"
                 }
             },
-            "args": [],
+            "args": [
+                "-vv",
+                "philbobaggins"
+            ],
             "cwd": "${workspaceFolder}"
         },
         {
