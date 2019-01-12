@@ -13,6 +13,7 @@ install:
   - cmd: rust-nightly-%TARGET%.exe /VERYSILENT /NORESTART /DIR="C:\Program Files (x86)\Rust"
   - cmd: SET PATH=%PATH%;C:\Program Files (x86)\Rust\bin
   - cmd: SET PATH=%PATH%;C:\MinGW\bin
+  - cargo install --force cargo-audit
   - rustc -V
   - cargo -V
 
@@ -21,3 +22,4 @@ build_script:
 
 test_script:
   - cargo test --verbose
+  - cargo audit
