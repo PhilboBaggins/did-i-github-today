@@ -1,6 +1,7 @@
 [package]
 name = "did-i-github-today"
 version = "0.1.0"
+edition = "2018"
 authors = ["Phil <PhilboBaggins@users.noreply.github.com>"]
 description = "An command line application to tell you if you've done anything on Github today"
 license = "MIT OR Apache-2.0"
