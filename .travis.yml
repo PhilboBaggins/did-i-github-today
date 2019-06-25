@@ -7,6 +7,7 @@ rust:
 matrix:
   allow_failures:
     - rust: nightly
+  fast_finish: true
 before_script:
   - cargo install --force cargo-audit
 script:
