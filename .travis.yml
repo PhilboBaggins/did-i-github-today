@@ -14,6 +14,7 @@ matrix:
 before_script:
   - cargo install --force cargo-audit
 script:
-  - cargo audit
   - cargo build --verbose
+  - cargo build --examples
   - cargo test --verbose
+  - cargo audit
