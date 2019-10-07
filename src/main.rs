@@ -3,7 +3,7 @@ extern crate reqwest;
 extern crate json;
 extern crate chrono;
 
-use clap::{App, Arg};
+use clap::{App, Arg, crate_version};
 use std::io::Read;
 use chrono::prelude::*;
 
@@ -103,7 +103,7 @@ macro_rules! die {
 
 fn main() {
     let matches = App::new("Did I Github today?")
-        .version("0.1.0")
+        .version(crate_version!())
         .about("An command line application to tell you if you've done anything on Github today")
         .author("Phil B.")
         .arg(Arg::with_name("username")
