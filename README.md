@@ -6,6 +6,8 @@ Did I Github today?
 
 This command line tool answers the age old question: Did I use Github today?
 
+![usage-example.gif](usage-example.gif)
+
 License
 -------
 
