@@ -1,0 +1,307 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: zsh
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /Users/phil/SyncRoots/General/Projects/_Software/_Rust/_InProgress/did-i-github-today
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 168
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 45
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Terminalizer
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 1238
+    content: c
+  - delay: 67
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                                                                                                                       \r \r\e]2;phil@Phils-MacBook-Pro-2: ~/SyncRoots/General/Projects/_Software/_Rust/_InProgress/did-i-github-today\a\e]1;..-github-today\a"
+  - delay: 93
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mdid-i-github-today\e[00m \e[01;34mgit:(\e[31mmaster\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004hc"
+  - delay: 263
+    content: "\bca"
+  - delay: 289
+    content: r
+  - delay: 359
+    content: g
+  - delay: 63
+    content: o
+  - delay: 209
+    content: ' '
+  - delay: 272
+    content: r
+  - delay: 72
+    content: u
+  - delay: 224
+    content: 'n'
+  - delay: 135
+    content: ' '
+  - delay: 633
+    content: '-'
+  - delay: 143
+    content: '-'
+  - delay: 440
+    content: ' '
+  - delay: 575
+    content: "\e[7mphilbobaggins\e[27m"
+  - delay: 258
+    content: "\e[13D\e[27mp\e[27mh\e[27mi\e[27ml\e[27mb\e[27mo\e[27mb\e[27ma\e[27mg\e[27mg\e[27mi\e[27mn\e[27ms\e[?1l\e>\e[?2004l\r\r\n\e]2;cargo run -- philbobaggins\a\e]1;cargo\a"
+  - delay: 490
+    content: "\e[0m\e[0m\e[1m\e[32m    Finished\e[0m dev [unoptimized + debuginfo] target(s) in 0.46s\r\n"
+  - delay: 5
+    content: "\e[0m\e[0m\e[1m\e[32m     Running\e[0m `target/debug/did-i-github-today philbobaggins`\r\n"
+  - delay: 1898
+    content: "No\r\n\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                                                                                                                       \r \r\e]2;phil@Phils-MacBook-Pro-2: ~/SyncRoots/General/Projects/_Software/_Rust/_InProgress/did-i-github-today\a\e]1;..-github-today\a"
+  - delay: 106
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mdid-i-github-today\e[00m \e[01;34mgit:(\e[31mmaster\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 759
+    content: g
+  - delay: 135
+    content: "\bgi"
+  - delay: 81
+    content: t
+  - delay: 111
+    content: ' '
+  - delay: 241
+    content: c
+  - delay: 87
+    content: o
+  - delay: 241
+    content: m
+  - delay: 119
+    content: m
+  - delay: 256
+    content: i
+  - delay: 96
+    content: t
+  - delay: 90
+    content: ' '
+  - delay: 551
+    content: '-'
+  - delay: 360
+    content: a
+  - delay: 135
+    content: m
+  - delay: 384
+    content: ' '
+  - delay: 361
+    content: '"'
+  - delay: 209
+    content: A
+  - delay: 366
+    content: d
+  - delay: 144
+    content: d
+  - delay: 392
+    content: ' '
+  - delay: 881
+    content: u
+  - delay: 159
+    content: s
+  - delay: 288
+    content: a
+  - delay: 209
+    content: g
+  - delay: 102
+    content: e
+  - delay: 72
+    content: ' '
+  - delay: 179
+    content: e
+  - delay: 206
+    content: x
+  - delay: 233
+    content: a
+  - delay: 94
+    content: m
+  - delay: 265
+    content: p
+  - delay: 200
+    content: l
+  - delay: 496
+    content: e
+  - delay: 185
+    content: ' '
+  - delay: 912
+    content: G
+  - delay: 136
+    content: I
+  - delay: 87
+    content: F
+  - delay: 368
+    content: '"'
+  - delay: 567
+    content: "\e[?1l\e>\e[?2004l\r\r\n\e]2;git commit -am \"Add usage example GIF\"\a\e]1;git\a"
+  - delay: 83
+    content: "[master c618b90] Add usage example GIF\r\n 1 file changed, 2 insertions(+)\r\n\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                                                                                                                       \r \r\e]2;phil@Phils-MacBook-Pro-2: ~/SyncRoots/General/Projects/_Software/_Rust/_InProgress/did-i-github-today\a\e]1;..-github-today\a"
+  - delay: 66
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mdid-i-github-today\e[00m \e[01;34mgit:(\e[31mmaster\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 1050
+    content: g
+  - delay: 135
+    content: "\bgi"
+  - delay: 88
+    content: t
+  - delay: 42
+    content: ' '
+  - delay: 198
+    content: p
+  - delay: 185
+    content: u
+  - delay: 79
+    content: s
+  - delay: 89
+    content: h
+  - delay: 311
+    content: "\e[?1l\e>\e[?2004l\r\r\n\e]2;git push\a\e]1;git\a"
+  - delay: 6016
+    content: "\r\e[KEnumerating objects: 5, done.\r\n\r\e[KCounting objects:  20% (1/5)\r\r\e[KCounting objects:  40% (2/5)\r\r\e[KCounting objects:  60% (3/5)\r\r\e[KCounting objects:  80% (4/5)\r\r\e[KCounting objects: 100% (5/5)\r\r\e[KCounting objects: 100% (5/5), done.\r\nDelta compression using up to 8 threads\r\n\r\e[KCompressing objects:  33% (1/3)\r\r\e[KCompressing objects:  66% (2/3)\r\r\e[KCompressing objects: 100% (3/3)\r\r\e[KCompressing objects: 100% (3/3), done.\r\n\r\e[KWriting objects:  33% (1/3)\r\r\e[KWriting objects:  66% (2/3)\r\r\e[KWriting objects: 100% (3/3)\r\r\e[KWriting objects: 100% (3/3), 340 bytes | 170.00 KiB/s, done.\r\nTotal 3 (delta 2), reused 0 (delta 0)\r\n"
+  - delay: 449
+    content: "remote: Resolving deltas:   0% (0/2)\e[K\r"
+  - delay: 44
+    content: "remote: Resolving deltas:  50% (1/2)\e[K\rremote: Resolving deltas: 100% (2/2)\e[K\rremote: Resolving deltas: 100% (2/2), completed with 2 local objects.\e[K\r\n"
+  - delay: 1976
+    content: "To github.com:PhilboBaggins/did-i-github-today.git\r\n   fa4372b..c618b90  master -> master\r\n"
+  - delay: 5
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                                                                                                                       \r \r\e]2;phil@Phils-MacBook-Pro-2: ~/SyncRoots/General/Projects/_Software/_Rust/_InProgress/did-i-github-today\a\e]1;..-github-today\a"
+  - delay: 59
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mdid-i-github-today\e[00m \e[01;34mgit:(\e[31mmaster\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 696
+    content: c
+  - delay: 176
+    content: "\bca"
+  - delay: 232
+    content: r
+  - delay: 279
+    content: g
+  - delay: 71
+    content: o
+  - delay: 120
+    content: ' '
+  - delay: 216
+    content: r
+  - delay: 81
+    content: u
+  - delay: 232
+    content: 'n'
+  - delay: 159
+    content: ' '
+  - delay: 537
+    content: '-'
+  - delay: 120
+    content: '-'
+  - delay: 216
+    content: ' '
+  - delay: 271
+    content: "\e[7mphilbobaggins\e[27m"
+  - delay: 226
+    content: "\e[13D\e[27mp\e[27mh\e[27mi\e[27ml\e[27mb\e[27mo\e[27mb\e[27ma\e[27mg\e[27mg\e[27mi\e[27mn\e[27ms\e[?1l\e>\e[?2004l\r\r\n\e]2;cargo run -- philbobaggins\a\e]1;cargo\a"
+  - delay: 488
+    content: "\e[0m\e[0m\e[1m\e[32m    Finished\e[0m dev [unoptimized + debuginfo] target(s) in 0.46s\r\n"
+  - delay: 5
+    content: "\e[0m\e[0m\e[1m\e[32m     Running\e[0m `target/debug/did-i-github-today philbobaggins`\r\n"
+  - delay: 1575
+    content: "No\r\n\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                                                                                                                       \r \r\e]2;phil@Phils-MacBook-Pro-2: ~/SyncRoots/General/Projects/_Software/_Rust/_InProgress/did-i-github-today\a\e]1;..-github-today\a"
+  - delay: 60
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mdid-i-github-today\e[00m \e[01;34mgit:(\e[31mmaster\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 16457
+    content: ' '
