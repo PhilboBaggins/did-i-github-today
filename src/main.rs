@@ -1,18 +1,18 @@
-extern crate clap;
-extern crate reqwest;
-extern crate json;
 extern crate chrono;
+extern crate clap;
+extern crate json;
+extern crate reqwest;
 
-use clap::{App, Arg, crate_version};
-use std::io::Read;
 use chrono::prelude::*;
+use clap::{crate_version, App, Arg};
+use std::io::Read;
 
 fn describe_event(event: &json::JsonValue) -> String {
     match event["type"].as_str() {
         Some("CreateEvent") => {
             let payload_ref_type = event["payload"]["ref_type"].as_str().unwrap_or("Unknown");
             format!("CreateEvent ({})", payload_ref_type)
-        },
+        }
         // TODO: Consider other event types: https://developer.github.com/v3/activity/events/types/
         Some(event_type) => format!("{}", event_type),
         None => "Unknown event".to_string(),
@@ -26,10 +26,14 @@ fn look_for_events(data: Vec<json::JsonValue>, verbose: u64) {
         let dt = DateTime::parse_from_rfc3339(dt_str).unwrap(); // TODO: Is this the right date/time standard?
         let dt_local = dt.with_timezone(&Local);
         let is_today = dt_local.year() == today.year()
-                    && dt_local.month() == today.month()
-                    && dt_local.day() == today.day();
+            && dt_local.month() == today.month()
+            && dt_local.day() == today.day();
         if is_today && verbose > 0 {
-            println!("{} at {}", describe_event(x), dt_local.format("%H:%M:%S").to_string());
+            println!(
+                "{} at {}",
+                describe_event(x),
+                dt_local.format("%H:%M:%S").to_string()
+            );
         }
         is_today
     });
@@ -77,20 +81,26 @@ fn get_and_parse_json(url: &str, verbose: u64) -> Result<Vec<json::JsonValue>, M
     // TODO: Set user-agent header - https://developer.github.com/v3/#user-agent-required
     let mut resp = reqwest::blocking::get(url)?;
     if resp.status().is_success() == false {
-        return Err(MyError::Other(format!("Failed to access Github API, HTTP status code was {}", resp.status())));
+        return Err(MyError::Other(format!(
+            "Failed to access Github API, HTTP status code was {}",
+            resp.status()
+        )));
     }
 
     let mut content = String::new();
     resp.read_to_string(&mut content)?;
 
-    if verbose > 2 { // Super verbose!
+    if verbose > 2 {
+        // Super verbose!
         println!("{}", content);
     }
 
     if let Ok(json::JsonValue::Array(data)) = json::parse(&content) {
         Ok(data)
     } else {
-        Err(MyError::Other("Unable to understand response from Github API".to_string()))
+        Err(MyError::Other(
+            "Unable to understand response from Github API".to_string(),
+        ))
     }
 }
 
@@ -106,15 +116,19 @@ fn main() {
         .version(crate_version!())
         .about("An command line application to tell you if you've done anything on Github today")
         .author("Phil B.")
-        .arg(Arg::with_name("username")
-            .help("Your Github username")
-            .takes_value(true)
-            .required(true))
-        .arg(Arg::with_name("verbose")
-            .short('v')
-            .long("verbose")
-            .multiple(true)
-            .help("Enable verbose output"))
+        .arg(
+            Arg::with_name("username")
+                .help("Your Github username")
+                .takes_value(true)
+                .required(true),
+        )
+        .arg(
+            Arg::with_name("verbose")
+                .short('v')
+                .long("verbose")
+                .multiple(true)
+                .help("Enable verbose output"),
+        )
         .get_matches();
 
     let username = matches.value_of("username").unwrap();
