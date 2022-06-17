@@ -75,7 +75,7 @@ fn get_and_parse_json(url: &str, verbose: u64) -> Result<Vec<json::JsonValue>, M
     }
 
     // TODO: Set user-agent header - https://developer.github.com/v3/#user-agent-required
-    let mut resp = reqwest::get(url)?;
+    let mut resp = reqwest::blocking::get(url)?;
     if resp.status().is_success() == false {
         return Err(MyError::Other(format!("Failed to access Github API, HTTP status code was {}", resp.status())));
     }

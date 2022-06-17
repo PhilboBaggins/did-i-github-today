@@ -10,5 +10,5 @@ repository = "https://github.com/PhilboBaggins/did-i-github-today"
 [dependencies]
 clap = "2.33.0"
 json = "0.12.0"
-reqwest = "0.9.22"
+reqwest = { version = "0.11.10", features = ["blocking"] }
 chrono = "0.4.10"
