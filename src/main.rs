@@ -111,7 +111,7 @@ fn main() {
             .takes_value(true)
             .required(true))
         .arg(Arg::with_name("verbose")
-            .short("v")
+            .short('v')
             .long("verbose")
             .multiple(true)
             .help("Enable verbose output"))
