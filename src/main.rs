@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 extern crate chrono;
 extern crate clap;
 extern crate json;
@@ -26,8 +28,8 @@ fn look_for_events(data: Vec<json::JsonValue>, verbose: u64) {
         let dt = DateTime::parse_from_rfc3339(dt_str).unwrap(); // TODO: Is this the right date/time standard?
         let dt_local = dt.with_timezone(&Local);
         let is_today = dt_local.year() == today.year()
-            && dt_local.month() == today.month()
-            && dt_local.day() == today.day();
+                    && dt_local.month() == today.month()
+                    && dt_local.day() == today.day();
         if is_today && verbose > 0 {
             println!("{} at {}", describe_event(x), dt_local.format("%H:%M:%S").to_string());
         }
@@ -112,19 +114,15 @@ fn main() {
         .version(crate_version!())
         .about("An command line application to tell you if you've done anything on Github today")
         .author("Phil B.")
-        .arg(
-            Arg::with_name("username")
-                .help("Your Github username")
-                .takes_value(true)
-                .required(true),
-        )
-        .arg(
-            Arg::with_name("verbose")
-                .short('v')
-                .long("verbose")
-                .multiple(true)
-                .help("Enable verbose output"),
-        )
+        .arg(Arg::with_name("username")
+            .help("Your Github username")
+            .takes_value(true)
+            .required(true))
+        .arg(Arg::with_name("verbose")
+            .short("v")
+            .long("verbose")
+            .multiple(true)
+            .help("Enable verbose output"))
         .get_matches();
 
     let username = matches.value_of("username").unwrap();
