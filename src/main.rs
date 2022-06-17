@@ -29,11 +29,7 @@ fn look_for_events(data: Vec<json::JsonValue>, verbose: u64) {
             && dt_local.month() == today.month()
             && dt_local.day() == today.day();
         if is_today && verbose > 0 {
-            println!(
-                "{} at {}",
-                describe_event(x),
-                dt_local.format("%H:%M:%S").to_string()
-            );
+            println!("{} at {}", describe_event(x), dt_local.format("%H:%M:%S").to_string());
         }
         is_today
     });
