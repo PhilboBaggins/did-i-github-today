@@ -3,29 +3,38 @@
 extern crate chrono;
 extern crate clap;
 extern crate json;
-extern crate reqwest;
+extern crate ureq;
 
-use chrono::prelude::*;
-use clap::{crate_version, App, Arg};
-use std::io::Read;
+//use chrono::prelude::*;
+use clap::{crate_version, Command, Arg, ArgAction};
+use serde::Deserialize;
+use chrono::{DateTime, Local};
+use crate::chrono::Datelike;
 
-fn describe_event(event: &json::JsonValue) -> String {
-    match event["type"].as_str() {
-        Some("CreateEvent") => {
-            let payload_ref_type = event["payload"]["ref_type"].as_str().unwrap_or("Unknown");
-            format!("CreateEvent ({})", payload_ref_type)
-        }
+#[derive(Deserialize, Debug)]
+struct UserEventsApiResponse {
+    created_at: String,
+    r#type: String,
+    payload: UserEventsPayload,
+}
+
+#[derive(Deserialize, Debug)]
+struct UserEventsPayload {
+    ref_type: Option<String>,
+}
+
+fn describe_event(event: &UserEventsApiResponse) -> String {
+    match (event.r#type.as_str(), &event.payload.ref_type) {
+        ("CreateEvent", Some(ref_type)) => format!("CreateEvent ({})", ref_type),
         // TODO: Consider other event types: https://developer.github.com/v3/activity/events/types/
-        Some(event_type) => format!("{}", event_type),
-        None => "Unknown event".to_string(),
+        _ => format!("{}", event.r#type),
     }
 }
 
-fn look_for_events(data: Vec<json::JsonValue>, verbose: u64) {
+fn look_for_events(data: Vec<UserEventsApiResponse>, verbose: u64) {
     let today = Local::now();
     let todays_events = data.iter().filter(|x| {
-        let dt_str = x["created_at"].as_str().unwrap();
-        let dt = DateTime::parse_from_rfc3339(dt_str).unwrap(); // TODO: Is this the right date/time standard?
+        let dt = DateTime::parse_from_rfc3339(&x.created_at).unwrap(); // TODO: Is this the right date/time standard?
         let dt_local = dt.with_timezone(&Local);
         let is_today = dt_local.year() == today.year()
                     && dt_local.month() == today.month()
@@ -55,8 +64,7 @@ fn look_for_events(data: Vec<json::JsonValue>, verbose: u64) {
 #[derive(Debug)]
 enum MyError {
     Io(std::io::Error),
-    ReqwestError(reqwest::Error),
-    Other(String),
+    Ureq(ureq::Error),
 }
 
 impl From<std::io::Error> for MyError {
@@ -65,41 +73,29 @@ impl From<std::io::Error> for MyError {
     }
 }
 
-impl From<reqwest::Error> for MyError {
-    fn from(err: reqwest::Error) -> MyError {
-        MyError::ReqwestError(err)
+impl From<ureq::Error> for MyError {
+    fn from(err: ureq::Error) -> MyError {
+        MyError::Ureq(err)
     }
 }
 
-fn get_and_parse_json(url: &str, verbose: u64) -> Result<Vec<json::JsonValue>, MyError> {
+fn get_and_parse_json(url: &str, verbose: u64) -> Result<Vec<UserEventsApiResponse>, MyError> {
     if verbose > 1 {
         println!("Fetching {}", url);
     }
 
     // TODO: Set user-agent header - https://developer.github.com/v3/#user-agent-required
-    let mut resp = reqwest::blocking::get(url)?;
-    if resp.status().is_success() == false {
-        return Err(MyError::Other(format!(
-            "Failed to access Github API, HTTP status code was {}",
-            resp.status()
-        )));
-    }
-
-    let mut content = String::new();
-    resp.read_to_string(&mut content)?;
+    let resp: Vec<UserEventsApiResponse> = ureq::get(url)
+        .set("Accept", "application/vnd.github.v3+json")
+        .call()?
+        .into_json()?;
 
     if verbose > 2 {
         // Super verbose!
-        println!("{}", content);
+        println!("{:?}", resp);
     }
 
-    if let Ok(json::JsonValue::Array(data)) = json::parse(&content) {
-        Ok(data)
-    } else {
-        Err(MyError::Other(
-            "Unable to understand response from Github API".to_string(),
-        ))
-    }
+    Ok(resp)
 }
 
 macro_rules! die {
@@ -133,7 +129,6 @@ fn main() {
         Ok(data) => look_for_events(data, verbose),
 
         Err(MyError::Io(err)) => die!("IO error: {}", err),
-        Err(MyError::ReqwestError(err)) => die!("HTTP request error: {}", err),
-        Err(MyError::Other(err)) => die!("{}", err),
+        Err(MyError::Ureq(err)) => die!("HTTP request error: {}", err),
     }
 }
