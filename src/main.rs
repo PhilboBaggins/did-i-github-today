@@ -31,7 +31,7 @@ fn describe_event(event: &UserEventsApiResponse) -> String {
     }
 }
 
-fn look_for_events(data: Vec<UserEventsApiResponse>, verbose: u64) {
+fn look_for_events(data: Vec<UserEventsApiResponse>, verbose: u8) {
     let today = Local::now();
     let todays_events = data.iter().filter(|x| {
         let dt = DateTime::parse_from_rfc3339(&x.created_at).unwrap(); // TODO: Is this the right date/time standard?
@@ -79,7 +79,7 @@ impl From<ureq::Error> for MyError {
     }
 }
 
-fn get_and_parse_json(url: &str, verbose: u64) -> Result<Vec<UserEventsApiResponse>, MyError> {
+fn get_and_parse_json(url: &str, verbose: u8) -> Result<Vec<UserEventsApiResponse>, MyError> {
     if verbose > 1 {
         println!("Fetching {}", url);
     }
@@ -106,23 +106,23 @@ macro_rules! die {
 }
 
 fn main() {
-    let matches = App::new("Did I Github today?")
+    let matches = Command::new("Did I Github today?")
         .version(crate_version!())
         .about("An command line application to tell you if you've done anything on Github today")
         .author("Phil B.")
-        .arg(Arg::with_name("username")
+        .arg(Arg::new("username")
             .help("Your Github username")
-            .takes_value(true)
+            .action(ArgAction::Set)
             .required(true))
-        .arg(Arg::with_name("verbose")
-            .short("v")
+        .arg(Arg::new("verbose")
+            .short('v')
             .long("verbose")
-            .multiple(true)
+            .action(ArgAction::Count)
             .help("Enable verbose output"))
         .get_matches();
 
-    let username = matches.value_of("username").unwrap();
-    let verbose = matches.occurrences_of("verbose");
+    let username = matches.get_one::<String>("username").unwrap();
+    let verbose = matches.get_count("verbose");
     let url = format!("https://api.github.com/users/{}/events", username);
 
     match get_and_parse_json(&url, verbose) {
