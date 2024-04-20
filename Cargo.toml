@@ -8,8 +8,8 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/PhilboBaggins/did-i-github-today"
 
 [dependencies]
-clap = { version = "4.4.18", features = ["cargo"] }
+clap = { version = "4.5.4", features = ["cargo"] }
 json = "0.12.4"
-serde = { version = "1.0.195", features = ["derive"] }
-ureq = { version = "2.9.1", features = ["json"] }
-chrono = "0.4.32"
+serde = { version = "1.0.198", features = ["derive"] }
+ureq = { version = "2.9.6", features = ["json"] }
+chrono = "0.4.38"
