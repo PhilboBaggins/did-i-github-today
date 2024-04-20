@@ -2,10 +2,8 @@
 
 extern crate chrono;
 extern crate clap;
-extern crate json;
 extern crate ureq;
 
-//use chrono::prelude::*;
 use clap::{crate_version, Command, Arg, ArgAction};
 use serde::Deserialize;
 use chrono::{DateTime, Local};
