@@ -84,9 +84,10 @@ fn get_and_parse_json(url: &str, verbose: u8) -> Result<Vec<UserEventsApiRespons
 
     // TODO: Set user-agent header - https://developer.github.com/v3/#user-agent-required
     let resp: Vec<UserEventsApiResponse> = ureq::get(url)
-        .set("Accept", "application/vnd.github.v3+json")
+        .header("Accept", "application/vnd.github.v3+json")
         .call()?
-        .into_json()?;
+        .body_mut()
+        .read_json()?;
 
     if verbose > 2 {
         // Super verbose!
